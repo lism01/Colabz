@@ -6,11 +6,8 @@
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; }
     body { font-family: 'Segoe UI', sans-serif; background: #0a0a0a; color: #fff; min-height: 100vh; display: flex; flex-direction: column; align-items: center; padding: 40px 20px; }
-
     .logo { font-size: 2.6rem; font-weight: 900; background: linear-gradient(90deg, #1DB954, #1ed760); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin-bottom: 4px; letter-spacing: -1px; }
     .tagline { color: #555; margin-bottom: 40px; font-size: 0.9rem; letter-spacing: 0.05em; text-transform: uppercase; }
-
-    /* LOGIN */
     #loginScreen { display: flex; flex-direction: column; align-items: center; width: 100%; max-width: 480px; }
     .login-card { background: #141414; border: 1px solid #222; border-radius: 20px; padding: 44px 36px; text-align: center; width: 100%; }
     .login-card h2 { font-size: 1.3rem; font-weight: 700; margin-bottom: 10px; }
@@ -23,35 +20,30 @@
     .manual-label { font-size: 0.75rem; color: #555; text-align: left; margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.08em; }
     .manual-input { width: 100%; background: #0f0f0f; border: 1px solid #222; border-radius: 8px; color: #fff; padding: 11px 14px; font-size: 0.88rem; outline: none; transition: border 0.2s; margin-bottom: 10px; }
     .manual-input:focus { border-color: #1DB954; }
-    .manual-btn { width: 100%; background: #1a1a1a; color: #1DB954; font-weight: 600; font-size: 0.88rem; border: 1px solid #1DB954; border-radius: 50px; padding: 11px; cursor: pointer; transition: background 0.2s; }
+    .manual-btn { width: 100%; background: #1a1a1a; color: #1DB954; font-weight: 600; font-size: 0.88rem; border: 1px solid #1DB954; border-radius: 50px; padding: 11px; cursor: pointer; transition: background 0.2s; margin-top: 4px; }
     .manual-btn:hover { background: #1DB95420; }
     .dev-link { margin-top: 20px; font-size: 0.78rem; color: #444; }
     .dev-link a { color: #1DB954; }
-
-    /* APP */
+    .error-msg { color: #ff5555; font-size: 0.82rem; margin-top: 12px; min-height: 18px; }
     #appScreen { display: none; flex-direction: column; align-items: center; width: 100%; }
     .topbar { display: flex; align-items: center; justify-content: space-between; width: 100%; max-width: 560px; margin-bottom: 32px; }
     .user-pill { display: flex; align-items: center; gap: 8px; background: #141414; border: 1px solid #222; border-radius: 50px; padding: 6px 14px 6px 6px; font-size: 0.82rem; color: #aaa; }
     .user-pill img { width: 26px; height: 26px; border-radius: 50%; background: #222; }
     .logout { background: none; border: none; color: #444; font-size: 0.75rem; cursor: pointer; padding: 4px 8px; border-radius: 4px; }
     .logout:hover { color: #fff; }
-
     .card { background: #141414; border: 1px solid #222; border-radius: 16px; padding: 24px; width: 100%; max-width: 560px; margin-bottom: 16px; }
     .card label { display: block; font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.1em; color: #555; margin-bottom: 8px; }
     .artist-row { display: flex; align-items: center; gap: 10px; }
     .artist-input { flex: 1; background: #0f0f0f; border: 1px solid #222; border-radius: 8px; color: #fff; padding: 12px 14px; font-size: 0.95rem; outline: none; transition: border 0.2s; }
     .artist-input:focus { border-color: #1DB954; }
     .vs { color: #333; font-weight: 800; font-size: 0.8rem; flex-shrink: 0; }
-
-    .search-btn { width: 100%; max-width: 560px; background: #1DB954; color: #000; font-weight: 800; font-size: 1rem; border: none; border-radius: 50px; padding: 15px; cursor: pointer; transition: background 0.2s, transform 0.1s; margin-bottom: 24px; letter-spacing: 0.02em; }
+    .search-btn { width: 100%; max-width: 560px; background: #1DB954; color: #000; font-weight: 800; font-size: 1rem; border: none; border-radius: 50px; padding: 15px; cursor: pointer; transition: background 0.2s, transform 0.1s; margin-bottom: 24px; }
     .search-btn:hover { background: #1ed760; transform: scale(1.01); }
     .search-btn:disabled { background: #1a1a1a; color: #444; cursor: not-allowed; transform: none; }
-
     #status { color: #555; font-size: 0.85rem; margin-bottom: 16px; text-align: center; min-height: 20px; display: flex; align-items: center; justify-content: center; gap: 8px; }
     #status.error { color: #ff5555; }
     .spinner { width: 14px; height: 14px; border: 2px solid #222; border-top-color: #1DB954; border-radius: 50%; animation: spin 0.7s linear infinite; flex-shrink: 0; }
     @keyframes spin { to { transform: rotate(360deg); } }
-
     .results-header { width: 100%; max-width: 560px; font-size: 0.9rem; font-weight: 700; margin-bottom: 12px; color: #666; }
     .results-header span { color: #1DB954; }
     .track-list { width: 100%; max-width: 560px; display: flex; flex-direction: column; gap: 8px; margin-bottom: 60px; }
@@ -72,31 +64,25 @@
   <div class="logo">Colabz</div>
   <p class="tagline">Artist Collaboration Finder</p>
 
-  <!-- LOGIN SCREEN -->
   <div id="loginScreen">
     <div class="login-card">
       <h2>Connect to Spotify</h2>
-      <p>Log in with your Spotify account to start searching for collabs between any two artists.</p>
+      <p>Log in with Spotify or enter your app credentials to search for collabs between any two artists.</p>
       <button class="spotify-btn" onclick="loginWithSpotify()">
         <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.521 17.34c-.24.359-.66.48-1.021.24-2.82-1.74-6.36-2.101-10.561-1.141-.418.122-.779-.179-.899-.539-.12-.421.18-.78.54-.9 4.56-1.021 8.52-.6 11.64 1.32.42.18.479.659.301 1.02zm1.44-3.3c-.301.42-.841.6-1.262.3-3.239-1.98-8.159-2.58-11.939-1.38-.479.12-1.02-.12-1.14-.6-.12-.48.12-1.021.6-1.141C9.6 9.9 15 10.561 18.72 12.84c.361.181.54.78.241 1.2zm.12-3.36C15.24 8.4 8.82 8.16 5.16 9.301c-.6.179-1.2-.181-1.38-.721-.18-.601.18-1.2.72-1.381 4.26-1.26 11.28-1.02 15.721 1.621.539.3.719 1.02.419 1.56-.299.421-1.02.599-1.559.3z"/></svg>
         Login with Spotify
       </button>
-
-      <div class="divider">or enter credentials manually</div>
-
+      <div class="divider">or use credentials</div>
       <div class="manual-label">Client ID</div>
       <input class="manual-input" type="text" id="manualId" placeholder="Paste Client ID..." />
       <div class="manual-label">Client Secret</div>
       <input class="manual-input" type="password" id="manualSecret" placeholder="Paste Client Secret..." />
       <button class="manual-btn" onclick="manualLogin()">Continue →</button>
-
-      <div class="dev-link">
-        Get free credentials at <a href="https://developer.spotify.com/dashboard" target="_blank">developer.spotify.com/dashboard</a>
-      </div>
+      <div class="error-msg" id="loginError"></div>
+      <div class="dev-link">Get free credentials at <a href="https://developer.spotify.com/dashboard" target="_blank">developer.spotify.com/dashboard</a></div>
     </div>
   </div>
 
-  <!-- APP SCREEN -->
   <div id="appScreen">
     <div class="topbar">
       <div class="logo" style="font-size:1.4rem">Colabz</div>
@@ -108,216 +94,7 @@
         <button class="logout" onclick="logout()">Log out</button>
       </div>
     </div>
-
     <div class="card">
       <label>Find collabs between</label>
       <div class="artist-row">
-        <input class="artist-input" type="text" id="artist1" placeholder="Artist 1  e.g. Drake" />
-        <div class="vs">VS</div>
-        <input class="artist-input" type="text" id="artist2" placeholder="Artist 2  e.g. Future" />
-      </div>
-    </div>
-
-    <button class="search-btn" id="searchBtn" onclick="search()">🔍 Find Collabs</button>
-    <div id="status"></div>
-    <div id="resultsHeader" class="results-header" style="display:none"></div>
-    <div id="results" class="track-list"></div>
-  </div>
-
-  <script>
-    // ── CONFIG ──────────────────────────────────────────────────────────────
-    // Replace with your Client ID once you have your GitHub Pages URL registered
-    const OAUTH_CLIENT_ID = localStorage.getItem('colabz_cid') || '';
-    const REDIRECT_URI = window.location.href.split('?')[0].split('#')[0];
-
-    let token = null;
-    let useManual = false;
-    let manualId = '', manualSecret = '';
-
-    // ── INIT ─────────────────────────────────────────────────────────────────
-    async function init() {
-      // Check for OAuth token in URL hash
-      const hash = new URLSearchParams(window.location.hash.substring(1));
-      if (hash.get('access_token')) {
-        token = hash.get('access_token');
-        localStorage.setItem('colabz_token', token);
-        window.history.replaceState({}, '', window.location.pathname);
-      } else {
-        token = localStorage.getItem('colabz_token');
-      }
-
-      if (token) {
-        try {
-          await loadUser();
-          showApp();
-          return;
-        } catch { localStorage.removeItem('colabz_token'); }
-      }
-
-      // Check saved manual creds
-      const sid = localStorage.getItem('colabz_mid');
-      const ssec = localStorage.getItem('colabz_msec');
-      if (sid && ssec) {
-        document.getElementById('manualId').value = sid;
-        document.getElementById('manualSecret').value = ssec;
-      }
-      showLogin();
-    }
-
-    // ── AUTH ──────────────────────────────────────────────────────────────────
-    function loginWithSpotify() {
-      const cid = localStorage.getItem('colabz_cid') || prompt('Paste your Spotify Client ID:');
-      if (!cid) return;
-      localStorage.setItem('colabz_cid', cid);
-      const params = new URLSearchParams({
-        client_id: cid,
-        response_type: 'token',
-        redirect_uri: REDIRECT_URI,
-        scope: 'user-read-private user-read-email',
-        show_dialog: true
-      });
-      window.location = 'https://accounts.spotify.com/authorize?' + params;
-    }
-
-    async function manualLogin() {
-      manualId = document.getElementById('manualId').value.trim();
-      manualSecret = document.getElementById('manualSecret').value.trim();
-      if (!manualId || !manualSecret) return alert('Please enter both Client ID and Secret.');
-      try {
-        token = await getClientCredToken(manualId, manualSecret);
-        localStorage.setItem('colabz_mid', manualId);
-        localStorage.setItem('colabz_msec', manualSecret);
-        useManual = true;
-        document.getElementById('userName').textContent = 'Connected';
-        showApp();
-      } catch(e) { alert(e.message); }
-    }
-
-    async function getClientCredToken(id, secret) {
-      const r = await fetch('https://accounts.spotify.com/api/token', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/x-www-form-urlencoded',
-          'Authorization': 'Basic ' + btoa(id + ':' + secret)
-        },
-        body: 'grant_type=client_credentials'
-      });
-      const d = await r.json();
-      if (!d.access_token) throw new Error('Invalid credentials — check your Client ID and Secret.');
-      return d.access_token;
-    }
-
-    async function loadUser() {
-      const r = await spotifyFetch('https://api.spotify.com/v1/me');
-      if (r.error) throw new Error('Token invalid');
-      document.getElementById('userName').textContent = r.display_name || 'Spotify User';
-      if (r.images?.[0]?.url) document.getElementById('userAvatar').src = r.images[0].url;
-    }
-
-    function logout() {
-      localStorage.removeItem('colabz_token');
-      token = null; useManual = false;
-      showLogin();
-    }
-
-    function showLogin() {
-      document.getElementById('loginScreen').style.display = 'flex';
-      document.getElementById('appScreen').style.display = 'none';
-    }
-
-    function showApp() {
-      document.getElementById('loginScreen').style.display = 'none';
-      document.getElementById('appScreen').style.display = 'flex';
-    }
-
-    // ── SPOTIFY API ───────────────────────────────────────────────────────────
-    async function spotifyFetch(url) {
-      const r = await fetch(url, { headers: { Authorization: 'Bearer ' + token } });
-      return r.json();
-    }
-
-    async function refreshManualToken() {
-      token = await getClientCredToken(manualId || localStorage.getItem('colabz_mid'), localStorage.getItem('colabz_msec'));
-    }
-
-    async function getArtist(name) {
-      const d = await spotifyFetch(`https://api.spotify.com/v1/search?q=${encodeURIComponent(name)}&type=artist&limit=1`);
-      const a = d.artists?.items?.[0];
-      if (!a) throw new Error(`Artist not found: "${name}"`);
-      return { id: a.id, name: a.name };
-    }
-
-    async function searchTracks(a1, a2) {
-      let all = [];
-      for (const q of [`${a1} ${a2}`, `artist:${a1} artist:${a2}`]) {
-        const d = await spotifyFetch(`https://api.spotify.com/v1/search?q=${encodeURIComponent(q)}&type=track&limit=50`);
-        all = all.concat(d.tracks?.items || []);
-      }
-      return all;
-    }
-
-    // ── SEARCH ────────────────────────────────────────────────────────────────
-    function setStatus(msg, cls='') {
-      const e = document.getElementById('status');
-      if (!msg) { e.innerHTML = ''; e.className = ''; return; }
-      e.innerHTML = cls === 'error' ? msg : `<div class="spinner"></div>${msg}`;
-      e.className = cls;
-    }
-
-    async function search() {
-      const a1v = document.getElementById('artist1').value.trim();
-      const a2v = document.getElementById('artist2').value.trim();
-      if (!a1v || !a2v) return setStatus('Enter two artist names.', 'error');
-
-      const btn = document.getElementById('searchBtn');
-      btn.disabled = true;
-      document.getElementById('results').innerHTML = '';
-      document.getElementById('resultsHeader').style.display = 'none';
-
-      try {
-        if (useManual) await refreshManualToken();
-
-        setStatus('Finding artists...');
-        const [art1, art2] = await Promise.all([getArtist(a1v), getArtist(a2v)]);
-
-        setStatus(`Searching for collabs...`);
-        const tracks = await searchTracks(art1.name, art2.name);
-
-        const seen = new Set();
-        const collabs = tracks.filter(t => {
-          if (seen.has(t.id)) return false;
-          seen.add(t.id);
-          return t.artists.some(a => a.id === art1.id) && t.artists.some(a => a.id === art2.id);
-        });
-
-        setStatus('');
-        const h = document.getElementById('resultsHeader');
-        h.style.display = 'block';
-
-        if (collabs.length === 0) {
-          h.innerHTML = `No collabs found between <span>${art1.name}</span> & <span>${art2.name}</span>`;
-          document.getElementById('results').innerHTML = `<div class="none-found">😔 No shared tracks found on Spotify.<br><span style="font-size:0.8rem;color:#333">They may have collaborated under different artist profiles.</span></div>`;
-        } else {
-          h.innerHTML = `Found <span>${collabs.length}</span> collab${collabs.length !== 1 ? 's' : ''} between <span>${art1.name}</span> & <span>${art2.name}</span>`;
-          document.getElementById('results').innerHTML = collabs.map(t => `
-            <div class="track">
-              <img src="${t.album?.images?.[2]?.url || t.album?.images?.[0]?.url || ''}" alt="" onerror="this.style.opacity=0" />
-              <div class="track-info">
-                <div class="track-name">${t.name}</div>
-                <div class="track-artists">${t.artists.map(a => a.name).join(', ')}</div>
-                <div class="track-album">${t.album?.name}</div>
-              </div>
-              <a class="play-btn" href="${t.external_urls?.spotify}" target="_blank">▶ Play</a>
-            </div>`).join('');
-        }
-      } catch(err) {
-        setStatus(err.message, 'error');
-      }
-      btn.disabled = false;
-    }
-
-    document.addEventListener('keydown', e => { if (e.key === 'Enter') search(); });
-    init();
-  </script>
-</body>
-</html>
+        <input class="arti
